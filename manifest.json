@@ -1,0 +1,10 @@
+{
+	"name": "Alpha",
+	"manifest_version": 2,
+	"version": "1.0",
+	"description": "Testing in Alpha Phase",
+	"browser_action": {
+		"default_title": "Alpha 1.0",
+		"default_popup": "alpha.html"
+	}
+}
