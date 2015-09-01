@@ -20,14 +20,12 @@ window.fbAsyncInit = function() {
 
 $(document).ready(function() {
 	$.ajaxSetup({ cache: true });
-	$.getScript('//connect.facebook.net/en_US/sdk.js', function(){
-    FB.init({
-      appId: '{1057857254231943}',
-      version: 'v2.4' 
-    });     
-    $('#loginbutton,#feedbutton').removeAttr('disabled');
-    FB.getLoginStatus(updateStatusCallback);
-
+	$.getScript('//connect.facebook.net/en_US/sdk.js', function() {
+		FB.init({
+		  appId: '{1057857254231943}',
+		  version: 'v2.4' 
+		});     
+	});
 	
 	/*
 	(function(d, s, id) {
