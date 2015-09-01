@@ -5,6 +5,6 @@
 	"description": "Testing in Alpha Phase",
 	"browser_action": {
 		"default_title": "Alpha 1.0",
-		"default_popup": "alpha.html"
+		"default_popup": "index.html"
 	}
 }
