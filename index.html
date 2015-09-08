@@ -4,39 +4,22 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
-		<title>Login</title>
+		<title>Alpha Home</title>
 	</head>
-	
-	<body>	
-		<div class="container">
-			<form role="form">
-				<fieldset>
-					<legend>Sign In</legend>
-					<div class="form-group">
-						<label for="email">Email:</label>
-						<input type="email" class="form-control" placeholder="Enter email"
-					</div>
-					
-					<div class="form-group">
-						<label for="password">Password:</label>
-						<input type="password" class="form-control" placeholder="Enter password"
-					</div>
-					
-					<div class="checkbox">
-						<label><input type="checkbox"> Remember me</label>
-					</div>
-					
-					<div>
-						<button type="submit" class="btn btn-primary">Login</button>					
-						<button type="button" class="btn btn-default btn-small">Cancel</button>
-					</div>
-				</fieldset>
-			</form>
+	<body>
+		<div class="container hero-unit">
+			<h1>Welcome to Alpha.</h1>
+			<p>
+				Read your Hangout messages without a wall of  distraction.
+			</p>
+			<p>
+				<a id="login" class="btn btn-primary btn-large">Read Messages Now!</a>
+			</p>
+			<ul id="msg">
+			</ul>
 		</div>
+		<script type='text/javascript' src="lib/jquery-1.11.3.js"></script>
+		<script type='text/javascript' src="lib/bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/home.js"></script>
 	</body>
-	
-	<script type='text/javascript' src="lib/jquery-1.11.3.js"></script>
-	<script type='text/javascript' src="lib/bootstrap/js/bootstrap.min.js"></script>	
-	<script type='text/javascript' src='js/fb.js'></script>
-
 </html>
