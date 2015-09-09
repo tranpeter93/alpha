@@ -7,6 +7,14 @@
   <Content type="html">
     <![CDATA[
       <script src="/staging/js/alpha.js"></script>
+	  <script type="text/javascript">
+			function() init() {
+				gapi.hangout.onApiReady.add(function() {
+					gapi.hangout.onAppVisible.add(function () {
+						alert("app is visible");
+					});					
+				});
+			}
       <!-- Your application code -->
     ]]>
   </Content>
