@@ -6,7 +6,7 @@
   </ModulePrefs>
   <Content type="html">
     <![CDATA[
-      <script src="/lib/alpha.js"></script>
+      <script src="//ec2-52-88-95-120.us-west-2.compute.amazonaws.com/staging/lib/alpha.js"></script>
       <!-- Your application code -->
     ]]>
   </Content>
