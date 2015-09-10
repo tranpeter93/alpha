@@ -12,7 +12,9 @@
 				gapi.hangout.onApiReady.add(function() {
 					gapi.hangout.onAppVisible.add(function () {
 						alert("app is visible");
-					});					
+					});
+					
+					gapi.hangout.layout.setChatPaneVisible(true);
 				});
 			}
       <!-- Your application code -->
