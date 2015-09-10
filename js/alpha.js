@@ -1,3 +1,3 @@
 $(document).ready(function() {
-	alert("Loaded alpha.js.")
+	document.write("Loaded alpha.js.");
 });
