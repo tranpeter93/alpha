@@ -13,7 +13,9 @@ var loadEmails = function() {
 			'scope': SCOPE,
 			'immediate': false
 		}).then(function() {
-			$("#login").html("Welcome ")
+			var profile = gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile();
+			
+			$("#login").html("Greetings " + profile.getName())
 		
 			gapi.load('client', function() {
 				gapi.client.load('gmail', 'v1').then(function() {
@@ -29,16 +31,18 @@ var onFailure = function() {
 	alert("Sorry! But you must sign in with your Google account to use this service.");
 }
 
-$.getScript("https://apis.google.com/js/platform.js");
-
-gapi.load("auth2", function() {
-	gapi.auth2.init({"client_id": gapi_clientId}).then(function() {
-		gapi.signin2.render("login", 
-		{
-		   "width": 300,
-		   "theme": "dark",
-		   "onsuccess": loadEmails,
-		   "onfailure": onFailure
+var initAuth = function() {
+	gapi.load("auth2", function() {
+		gapi.auth2.init({"client_id": gapi_clientId}).then(function() {
+			gapi.signin2.render("login", 
+			{
+			   "width": 300,
+			   "theme": "dark",
+			   "onsuccess": loadEmails,
+			   "onfailure": onFailure
+			})
 		})
-	})
-});
+	});
+};
+
+$.getScript("https://apis.google.com/js/platform.js", initAuth);
