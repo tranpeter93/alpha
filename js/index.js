@@ -4,17 +4,16 @@ var SCOPE = ["https://www.googleapis.com/auth/plus.login",
 					"https://mail.google.com/", 
 					"https://www.googleapis.com/auth/gmail.modify", 
 					"https://www.googleapis.com/auth/gmail.readonly"];
-
-$.getScript("https://apis.google.com/js/platform.js");
 					
-$('#login').click(function() {
+var loadEmails = function() {
 	gapi.load('auth', function() {
 		gapi.auth.authorize(
 		{
-				'client_id': gapi_clientId,
-				'scope': SCOPE,
-				'immediate': false
+			'client_id': gapi_clientId,
+			'scope': SCOPE,
+			'immediate': false
 		}).then(function() {
+			$("#login").html("Welcome ")
 		
 			gapi.load('client', function() {
 				gapi.client.load('gmail', 'v1').then(function() {
@@ -22,6 +21,24 @@ $('#login').click(function() {
 					resp.execute(function(a) {console.log(a)});
 				});	
 			});
-		})
+		});
 	});
+};
+
+var onFailure = function() {
+	alert("Sorry! But you must sign in with your Google account to use this service.");
+}
+
+$.getScript("https://apis.google.com/js/platform.js");
+
+gapi.load("auth2", function() {
+	gapi.auth2.init({"client_id": gapi_clientId}).then(function() {
+		gapi.signin2.render("login", 
+		{
+		   "width": 300,
+		   "theme": "dark",
+		   "onsuccess": loadEmails,
+		   "onfailure": onFailure
+		})
+	})
 });
