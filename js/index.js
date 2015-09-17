@@ -5,7 +5,9 @@ var SCOPE = ["https://www.googleapis.com/auth/plus.login",
 					"https://www.googleapis.com/auth/gmail.modify", 
 					"https://www.googleapis.com/auth/gmail.readonly"];
 
-$(document).ready(function() {
+$.getScript("https://apis.google.com/js/platform.js");
+					
+$('#login').click(function() {
 	gapi.load('auth', function() {
 		gapi.auth.authorize(
 		{
