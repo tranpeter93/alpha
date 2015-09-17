@@ -14,13 +14,14 @@ $('#login').click(function() {
 				'client_id': gapi_clientId,
 				'scope': SCOPE,
 				'immediate': false
-		});
+		}).then(function() {
 		
-		gapi.load('client', function() {
-			gapi.client.load('gmail', 'v1').then(function() {
-               var resp = gapi.client.request({"path": "https://www.googleapis.com/gmail/v1/users/me/threads"});
-               resp.execute(function(a) {console.log(a)});
-            });	
-		});
+			gapi.load('client', function() {
+				gapi.client.load('gmail', 'v1').then(function() {
+					var resp = gapi.client.request({"path": "https://www.googleapis.com/gmail/v1/users/me/threads"});
+					resp.execute(function(a) {console.log(a)});
+				});	
+			});
+		})
 	});
 });
