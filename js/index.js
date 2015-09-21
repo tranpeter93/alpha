@@ -1,27 +1,27 @@
 var gapi_clientId = "43916539739-kg913v794v0egih5l4en19eermk35qgl.apps.googleusercontent.com";
 
 var SCOPE = ["https://www.googleapis.com/auth/plus.login",
-					"https://mail.google.com/", 
-					"https://www.googleapis.com/auth/gmail.modify", 
-					"https://www.googleapis.com/auth/gmail.readonly"];
-					
-var loadEmails = function() {
+					"https://www.googleapis.com/auth/youtube"];
+	
+// Initializes gapi.auth
+// success callback: loadEmails
+var handleSignIn = function(googleUser) {
 	gapi.load('auth', function() {
 		gapi.auth.authorize(
 		{
 			'client_id': gapi_clientId,
 			'scope': SCOPE,
 			'immediate': false
-		}).then(function() {
-			var profile = gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile();
-			
-			$("#login").html("Greetings " + profile.getName())
+		}).then(function() {			
+			$("#login").html("Greetings " + googleUser.getBasicProfile().getName());
+			$("#login").after("<p id='playlists'></p>");			
 		
 			gapi.load('client', function() {
-				gapi.client.load('gmail', 'v1').then(function() {
-					var resp = gapi.client.request({"path": "https://www.googleapis.com/gmail/v1/users/me/threads"});
-					resp.execute(function(a) {console.log(a)});
-				});	
+				
+				//YOUTUBE API
+				gapi.client.load('youtube', 'v3', function() {
+					
+				});
 			});
 		});
 	});
@@ -31,14 +31,16 @@ var onFailure = function() {
 	alert("Sorry! But you must sign in with your Google account to use this service.");
 }
 
+// Initializes gapi.auth2
+// success callback: inits gapi.auth
 var initAuth = function() {
 	gapi.load("auth2", function() {
 		gapi.auth2.init({"client_id": gapi_clientId}).then(function() {
 			gapi.signin2.render("login", 
 			{
-			   "width": 300,
+			   "width": 200,
 			   "theme": "dark",
-			   "onsuccess": loadEmails,
+			   "onsuccess": handleSignIn,
 			   "onfailure": onFailure
 			})
 		})
