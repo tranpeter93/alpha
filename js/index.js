@@ -20,7 +20,11 @@ var handleSignIn = function(googleUser) {
 				
 				//YOUTUBE API
 				gapi.client.load('youtube', 'v3', function() {
-					
+					var YT = gapi.client.youtube.playlists.list({"part": "id", "mine": true})
+					YT.execute(function (playlist) {
+						for (plist of playlist.items)
+						console.log(plist.id);
+					});
 				});
 			});
 		});
