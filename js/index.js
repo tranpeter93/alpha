@@ -7,12 +7,17 @@ var handleYoutubeApi = function() {
 	gapi.client.load('youtube', 'v3', function() {
 		var YT = gapi.client.youtube.playlists.list({"part": "id", "mine": true})
 		YT.execute(function (playlist) {
-			for (plist of playlist.items) {
-				console.log(plist.id);
+			for (plist of playlist.result.items) {
+				var listHeader = document.createElement("h3");
+				$(listHeader).html(plist.id);
+				var header = $("#playlist-container").after(listHeader);
+				
 				var YT_LIST = gapi.client.youtube.playlistItems.list({"part": "id", "id": plist.id});
 				YT_LIST.execute(function (vidList) {
 					for (vid of vidList.items) {
-						console.log("   " + vid);
+						var listVid = document.createElement("h5");
+						$(listVid).html(vid.title);
+						$(header).after(listVid);
 					}
 				});								
 			};
@@ -30,7 +35,6 @@ var handleSignIn = function(googleUser) {
 			'immediate': false
 		}).then(function() {			
 			$("#login").html("Greetings " + googleUser.getBasicProfile().getName());
-			$("#login").after("<p id='playlists'></p>");
 		
 			gapi.load('client', function() {
 				handleYoutubeApi();
@@ -43,8 +47,7 @@ var onFailure = function() {
 	alert("Sorry! But you must sign in with your Google account to use this service.");
 }
 
-// Initializes gapi.auth2
-// success callback: inits gapi.auth
+// Authenticates user
 var initAuth = function() {
 	gapi.load("auth2", function() {
 		gapi.auth2.init({"client_id": gapi_clientId}).then(function() {
@@ -59,4 +62,5 @@ var initAuth = function() {
 	});
 };
 
+// Obtain GAPI script then callsback to OAUTH code
 $.getScript("https://apis.google.com/js/platform.js", initAuth);
