@@ -22,8 +22,8 @@ var handleYoutubeApi = function() {
 				YT_LIST.execute(function (vidList) {
 					for (vid of vidList.items) {
 						listVid = document.createElement("h5");
-						$(listVid).html(vid.title);
-						$("#list"+idx).after(listVid);
+						$(listVid).html(vid.snippet.title);
+						$("#list"+idx).append(listVid);
 					}
 				});								
 			};
