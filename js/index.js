@@ -2,20 +2,23 @@ var gapi_clientId = "43916539739-kg913v794v0egih5l4en19eermk35qgl.apps.googleuse
 
 var SCOPE = ["https://www.googleapis.com/auth/plus.login",
 					"https://www.googleapis.com/auth/youtube"];
-	
+
+//GLOBALS FOR TESTING
+var YT, listHeader, header, YT_LIST, listVid;					
+					
 var handleYoutubeApi = function() {	
 	gapi.client.load('youtube', 'v3', function() {
-		var YT = gapi.client.youtube.playlists.list({"part": "id", "mine": true})
+		YT = gapi.client.youtube.playlists.list({"part": "id", "mine": true})
 		YT.execute(function (playlist) {
 			for (plist of playlist.result.items) {
-				var listHeader = document.createElement("h3");
+				listHeader = document.createElement("h3");
 				$(listHeader).html(plist.id);
-				var header = $("#playlist-container").after(listHeader);
+				header = $("#playlist-container").after(listHeader);
 				
-				var YT_LIST = gapi.client.youtube.playlistItems.list({"part": "snippet", "playlistId": plist.id});
+				YT_LIST = gapi.client.youtube.playlistItems.list({"part": "snippet", "playlistId": plist.id});
 				YT_LIST.execute(function (vidList) {
 					for (vid of vidList.items) {
-						var listVid = document.createElement("h5");
+						listVid = document.createElement("h5");
 						$(listVid).html(vid.title);
 						$(header).after(listVid);
 					}
