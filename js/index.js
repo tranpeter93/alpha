@@ -3,8 +3,24 @@ var gapi_clientId = "43916539739-kg913v794v0egih5l4en19eermk35qgl.apps.googleuse
 var SCOPE = ["https://www.googleapis.com/auth/plus.login",
 					"https://www.googleapis.com/auth/youtube"];
 	
+var handleYoutubeApi = function() {	
+	gapi.client.load('youtube', 'v3', function() {
+		var YT = gapi.client.youtube.playlists.list({"part": "id", "mine": true})
+		YT.execute(function (playlist) {
+			for (plist of playlist.items) {
+				console.log(plist.id);
+				var YT_LIST = gapi.client.youtube.playlistItems.list({"part": "id", "id": plist.id});
+				YT_LIST.execute(function (vidList) {
+					for (vid of vidList.items) {
+						console.log("   " + vid);
+					}
+				});								
+			};
+		});
+	});
+}	
+	
 // Initializes gapi.auth
-// success callback: loadEmails
 var handleSignIn = function(googleUser) {
 	gapi.load('auth', function() {
 		gapi.auth.authorize(
@@ -14,18 +30,10 @@ var handleSignIn = function(googleUser) {
 			'immediate': false
 		}).then(function() {			
 			$("#login").html("Greetings " + googleUser.getBasicProfile().getName());
-			$("#login").after("<p id='playlists'></p>");			
+			$("#login").after("<p id='playlists'></p>");
 		
 			gapi.load('client', function() {
-				
-				//YOUTUBE API
-				gapi.client.load('youtube', 'v3', function() {
-					var YT = gapi.client.youtube.playlists.list({"part": "id", "mine": true})
-					YT.execute(function (playlist) {
-						for (plist of playlist.items)
-						console.log(plist.id);
-					});
-				});
+				handleYoutubeApi();
 			});
 		});
 	});
