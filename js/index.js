@@ -12,7 +12,7 @@ var handleYoutubeApi = function() {
 				$(listHeader).html(plist.id);
 				var header = $("#playlist-container").after(listHeader);
 				
-				var YT_LIST = gapi.client.youtube.playlistItems.list({"part": "id", "id": plist.id});
+				var YT_LIST = gapi.client.youtube.playlistItems.list({"part": "snippet", "playlistId": plist.id});
 				YT_LIST.execute(function (vidList) {
 					for (vid of vidList.items) {
 						var listVid = document.createElement("h5");
