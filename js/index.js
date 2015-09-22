@@ -10,9 +10,12 @@ var handleYoutubeApi = function() {
 	gapi.client.load('youtube', 'v3', function() {
 		YT = gapi.client.youtube.playlists.list({"part": "id", "mine": true})
 		YT.execute(function (playlist) {
-			for (plist of playlist.result.items) {
+			var idx = -1;
+			for (plist of playlist.result.items) {				
+				idx += 1;
 				listHeader = document.createElement("h3");
 				$(listHeader).html(plist.id);
+				$(listHeader).attr("id", "list" + idx);
 				header = $("#playlist-container").after(listHeader);
 				
 				YT_LIST = gapi.client.youtube.playlistItems.list({"part": "snippet", "playlistId": plist.id});
@@ -20,7 +23,7 @@ var handleYoutubeApi = function() {
 					for (vid of vidList.items) {
 						listVid = document.createElement("h5");
 						$(listVid).html(vid.title);
-						$(header).after(listVid);
+						$("#list"+idx).after(listVid);
 					}
 				});								
 			};
