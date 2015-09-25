@@ -15,7 +15,7 @@ var handleYoutubeApi = function() {
 			for (plist of playlist.result.items) {				
 				listHeader = document.createElement("h3");
 				$(listHeader).html(plist.snippet.title);
-				$(listHeader).attr("id", "list" + idx);
+				//$(listHeader).attr("id", "list" + idx);
 				$("#playlist-container").append(listHeader);
 				playlistArr.push(plist.id);
 			};
