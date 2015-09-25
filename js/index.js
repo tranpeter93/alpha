@@ -4,29 +4,33 @@ var SCOPE = ["https://www.googleapis.com/auth/plus.login",
 					"https://www.googleapis.com/auth/youtube"];
 
 //GLOBALS FOR TESTING
-var YT, listHeader, header, YT_LIST, listVid;					
+var YT, listHeader, YT_LIST, listVid, playlistArr = [];					
 					
 var handleYoutubeApi = function() {	
 	gapi.client.load('youtube', 'v3', function() {
-		YT = gapi.client.youtube.playlists.list({"part": "id", "mine": true})
+		YT = gapi.client.youtube.playlists.list({"part": "snippet", "mine": true})
 		YT.execute(function (playlist) {
-			var idx = -1;
+			
+			// FOR each playlist 
 			for (plist of playlist.result.items) {				
-				idx += 1;
 				listHeader = document.createElement("h3");
-				$(listHeader).html(plist.id);
+				$(listHeader).html(plist.snippet.title);
 				$(listHeader).attr("id", "list" + idx);
-				header = $("#playlist-container").after(listHeader);
-				
-				YT_LIST = gapi.client.youtube.playlistItems.list({"part": "snippet", "playlistId": plist.id});
-				YT_LIST.execute(function (vidList) {
-					for (vid of vidList.items) {
-						listVid = document.createElement("h5");
-						$(listVid).html(vid.snippet.title);
-						$("#list"+idx).append(listVid);
-					}
-				});								
+				$("#playlist-container").append(listHeader);
+				playlistArr.push(plist.id);
 			};
+		});
+		
+		YT_LIST = gapi.client.youtube.playlistItems.list({"part": "snippet", "playlistId": playlistArr, "maxResults": 50});
+		YT_LIST.execute(function (vidList) {
+			var idx = 0;
+			
+			// FOR each video in a playlist
+			for (vid of vidList.items) {
+				listVid = document.createElement("h5");
+				$(listVid).html(vid.snippet.title);
+				$("#list"+idx).append(listVid);
+			}
 		});
 	});
 }	
@@ -40,7 +44,7 @@ var handleSignIn = function(googleUser) {
 			'scope': SCOPE,
 			'immediate': false
 		}).then(function() {			
-			$("#login").html("Greetings " + googleUser.getBasicProfile().getName());
+			$("#login").hide();
 		
 			gapi.load('client', function() {
 				handleYoutubeApi();
