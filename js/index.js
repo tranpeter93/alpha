@@ -21,17 +21,17 @@ var handleYoutubeApi = function() {
 			};
 		});
 		
-		YT_LIST = gapi.client.youtube.playlistItems.list({"part": "snippet", "playlistId": playlistArr, "maxResults": 50});
-		YT_LIST.execute(function (vidList) {
-			var idx = 0;
+		// YT_LIST = gapi.client.youtube.playlistItems.list({"part": "snippet", "playlistId": playlistArr, "maxResults": 50});
+		// YT_LIST.execute(function (vidList) {
+			// var idx = 0;
 			
-			// FOR each video in a playlist
-			for (vid of vidList.items) {
-				listVid = document.createElement("h5");
-				$(listVid).html(vid.snippet.title);
-				$("#list"+idx).append(listVid);
-			}
-		});
+			// // FOR each video in a playlist
+			// for (vid of vidList.items) {
+				// listVid = document.createElement("h5");
+				// $(listVid).html(vid.snippet.title);
+				// $("#list"+idx).append(listVid);
+			// }
+		// });
 	});
 }	
 	
